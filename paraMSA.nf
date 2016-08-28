@@ -13,10 +13,10 @@ params.name             = "tutorial_data"
 params.seq              = "$baseDir/tutorial/data/tips16_0.5_00{1,2}.0400.fa"
 params.ref              = "$baseDir/tutorial/data/asymmetric_0.5.unroot.tree"
 params.output           = "$baseDir/tutorial/results/"
-params.straps           = 16
-params.straps_list      = '1,2,4,8,16'
-params.alignments       = 16
-params.alignments_list  = '1,2,4,8,16'
+params.straps           = 8
+params.straps_list      = '1,2,4,8'
+params.alignments       = 8
+params.alignments_list  = '1,2,4,8'
 params.aligner          = "CLUSTALW"
 
 log.info "p a r a M S A ~  version 0.1"
