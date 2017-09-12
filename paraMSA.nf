@@ -229,7 +229,7 @@ paramastrapPhylipsDir.flatMap {  id, dir -> dir.listFiles().collect { [id, it] }
  */
 
 def splitPhylip(file) {
-    def chunks = Channel.create() 
+    def chunks = [] 
     def buffer = new StringBuffer()
     file.eachLine { line ->
       if( line ==~ /^ +\d+\s+\d+/ ) {
@@ -256,7 +256,7 @@ paramastrapPhylips
         def strapID = 0 
         splitPhylip(file).collect{ phylip -> tuple(datasetID, alignmentID, strapID++, phylip) } 
      }
-     .set { splitPhylips  }  
+     .set { splitPhylips_ch  }  
 
 /*
  * Create bootstrap trees from each boottrap alignment replicate
@@ -269,7 +269,7 @@ process strap_trees {
     publishDir "${params.output}/${params.name}/${params.aligner}/$datasetID/strap_trees", mode: 'copy', overwrite: 'true'
 
     input:
-    set val (datasetID), val(alignmentID), val(strapID), val(phylip) from splitPhylips
+    set val (datasetID), val(alignmentID), val(strapID), val(phylip) from splitPhylips_ch
     
     output:
     set val (datasetID), file("${alignmentID}_${strapID}.nwk") into paramastrapTrees
